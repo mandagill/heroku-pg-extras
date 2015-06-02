@@ -14,6 +14,17 @@ class Heroku::Command::Pg < Heroku::Command::Base
     end
   end
 
+  # pg:stats_reset
+  # calls the Postgres functions pg_stat_reset() and pg_stat_statements_reset()
+  def stats_reset
+
+    db = shift_argument
+    attachment = generate_resolver.resolve(db, "DATABASE_URL")
+    response = hpg_client(attachment)
+    response.stats_reset()
+    
+  end
+
   # pg:psqlcommandhelper
   #
   # HIDDEN:
